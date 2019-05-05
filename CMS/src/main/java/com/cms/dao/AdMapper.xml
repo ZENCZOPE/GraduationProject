@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.AdMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.Ad" >
+    <id column="AD_ID" property="adId" jdbcType="INTEGER" />
+    <result column="AD_TITLE" property="adTitle" jdbcType="VARCHAR" />
+    <result column="AD_NOTE" property="adNote" jdbcType="VARCHAR" />
+    <result column="AD_ADDR" property="adAddr" jdbcType="VARCHAR" />
+    <result column="AD_PRICE" property="adPrice" jdbcType="VARCHAR" />
+    <result column="AD_OWNER" property="adOwner" jdbcType="VARCHAR" />
+    <result column="AD_EFFECT_TIME" property="adEffectTime" jdbcType="TIMESTAMP" />
+    <result column="AD_END_TIME" property="adEndTime" jdbcType="TIMESTAMP" />
+    <result column="AD_STATUS" property="adStatus" jdbcType="VARCHAR" />
+    <result column="OP_TIME" property="opTime" jdbcType="TIMESTAMP" />
+    <result column="OP_ID" property="opId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AD_ID, AD_TITLE, AD_NOTE, AD_ADDR, AD_PRICE, AD_OWNER, AD_EFFECT_TIME, AD_END_TIME, 
+    AD_STATUS, OP_TIME, OP_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad
+    where AD_ID = #{adId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryCountByCondition" resultType="java.lang.Integer" >
+    select 
+    count(1)
+    from ad
+   <where>
+    	<if test="adId != null">
+    	AND AD_ID = #{adId}
+    	</if>
+    	<if test="adTitle != null">
+    	AND AD_TITLE like "%"#{adTitle}"%"
+    	</if>
+    	<if test="adNote != null">
+    	AND AD_NOTE like  "%"#{adNote}"%"
+    	</if>
+    	<if test="adAddr != null">
+    	AND AD_ADDR = #{adAddr}
+    	</if>
+    	<if test="adOwner != null">
+    	AND AD_OWNER like "%"#{adOwner}"%"
+    	</if>
+    	<if test="adStatus != null">
+    	AND AD_STATUS = #{adStatus}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    </where>
+  </select>
+  
+   <select id="queryPageByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad
+   <where>
+    	<if test="adId != null">
+    	AND AD_ID = #{adId}
+    	</if>
+    	<if test="adTitle != null">
+    	AND AD_TITLE like "%"#{adTitle}"%"
+    	</if>
+    	<if test="adNote != null">
+    	AND AD_NOTE like  "%"#{adNote}"%"
+    	</if>
+    	<if test="adAddr != null">
+    	AND AD_ADDR = #{adAddr}
+    	</if>
+    	<if test="adOwner != null">
+    	AND AD_OWNER like "%"#{adOwner}"%"
+    	</if>
+    	<if test="adStatus != null">
+    	AND AD_STATUS = #{adStatus}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    </where>
+    limit #{index,jdbcType=INTEGER } ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ad
+   <where>
+    	<if test="adId != null">
+    	AND AD_ID = #{adId}
+    	</if>
+    	<if test="adTitle != null">
+    	AND AD_TITLE like "%"#{adTitle}"%"
+    	</if>
+    	<if test="adNote != null">
+    	AND AD_NOTE like  "%"#{adNote}"%"
+    	</if>
+    	<if test="adAddr != null">
+    	AND AD_ADDR = #{adAddr}
+    	</if>
+    	<if test="adOwner != null">
+    	AND AD_OWNER like "%"#{adOwner}"%"
+    	</if>
+    	<if test="adStatus != null">
+    	AND AD_STATUS = #{adStatus}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ad
+    where AD_ID = #{adId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.Ad" >
+    insert into ad (AD_TITLE, AD_NOTE, 
+      AD_ADDR, AD_PRICE, AD_OWNER, 
+      AD_EFFECT_TIME, AD_END_TIME, AD_STATUS, 
+      OP_TIME, OP_ID)
+    values ( #{adTitle,jdbcType=VARCHAR}, #{adNote,jdbcType=VARCHAR}, 
+      #{adAddr,jdbcType=VARCHAR}, #{adPrice,jdbcType=VARCHAR}, #{adOwner,jdbcType=VARCHAR}, 
+      #{adEffectTime,jdbcType=TIMESTAMP}, #{adEndTime,jdbcType=TIMESTAMP}, #{adStatus,jdbcType=VARCHAR}, 
+      #{opTime,jdbcType=TIMESTAMP}, #{opId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.Ad" >
+    insert into ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adId != null" >
+        AD_ID,
+      </if>
+      <if test="adTitle != null" >
+        AD_TITLE,
+      </if>
+      <if test="adNote != null" >
+        AD_NOTE,
+      </if>
+      <if test="adAddr != null" >
+        AD_ADDR,
+      </if>
+      <if test="adPrice != null" >
+        AD_PRICE,
+      </if>
+      <if test="adOwner != null" >
+        AD_OWNER,
+      </if>
+      <if test="adEffectTime != null" >
+        AD_EFFECT_TIME,
+      </if>
+      <if test="adEndTime != null" >
+        AD_END_TIME,
+      </if>
+      <if test="adStatus != null" >
+        AD_STATUS,
+      </if>
+      <if test="opTime != null" >
+        OP_TIME,
+      </if>
+      <if test="opId != null" >
+        OP_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adId != null" >
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="adTitle != null" >
+        #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adNote != null" >
+        #{adNote,jdbcType=VARCHAR},
+      </if>
+      <if test="adAddr != null" >
+        #{adAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="adPrice != null" >
+        #{adPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="adOwner != null" >
+        #{adOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="adEffectTime != null" >
+        #{adEffectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adEndTime != null" >
+        #{adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adStatus != null" >
+        #{adStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opId != null" >
+        #{opId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.Ad" >
+    update ad
+    <set >
+      <if test="adTitle != null" >
+        AD_TITLE = #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adNote != null" >
+        AD_NOTE = #{adNote,jdbcType=VARCHAR},
+      </if>
+      <if test="adAddr != null" >
+        AD_ADDR = #{adAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="adPrice != null" >
+        AD_PRICE = #{adPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="adOwner != null" >
+        AD_OWNER = #{adOwner,jdbcType=VARCHAR},
+      </if>
+      <if test="adEffectTime != null" >
+        AD_EFFECT_TIME = #{adEffectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adEndTime != null" >
+        AD_END_TIME = #{adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adStatus != null" >
+        AD_STATUS = #{adStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opId != null" >
+        OP_ID = #{opId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where AD_ID = #{adId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.Ad" >
+    update ad
+    set AD_TITLE = #{adTitle,jdbcType=VARCHAR},
+      AD_NOTE = #{adNote,jdbcType=VARCHAR},
+      AD_ADDR = #{adAddr,jdbcType=VARCHAR},
+      AD_PRICE = #{adPrice,jdbcType=VARCHAR},
+      AD_OWNER = #{adOwner,jdbcType=VARCHAR},
+      AD_EFFECT_TIME = #{adEffectTime,jdbcType=TIMESTAMP},
+      AD_END_TIME = #{adEndTime,jdbcType=TIMESTAMP},
+      AD_STATUS = #{adStatus,jdbcType=VARCHAR},
+      OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      OP_ID = #{opId,jdbcType=INTEGER}
+    where AD_ID = #{adId,jdbcType=INTEGER}
+  </update>
+</mapper>

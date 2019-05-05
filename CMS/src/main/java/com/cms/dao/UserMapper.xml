@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.User" >
+    <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_AGE" property="userAge" jdbcType="VARCHAR" />
+    <result column="USER_MAIL" property="userMail" jdbcType="VARCHAR" />
+    <result column="USER_PHONE" property="userPhone" jdbcType="VARCHAR" />
+    <result column="USER_ADDR" property="userAddr" jdbcType="VARCHAR" />
+    <result column="USER_ROLE" property="userRole" jdbcType="VARCHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="VARCHAR" />
+    <result column="USER_IDCARD" property="userIdcard" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, USER_AGE, USER_MAIL, USER_PHONE, USER_ADDR, USER_ROLE, USER_STATUS, 
+    USER_IDCARD
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="queryByIdcard" resultMap="BaseResultMap" parameterType="com.cms.pojo.User" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_IDCARD like #{userIdcard}
+  </select>
+  <select id="viewPage" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_STATUS >= 0
+    limit #{index} ,#{pageSize}
+  </select>
+  <select id="selectByLevel" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_STATUS = #{level}
+  </select>
+  <select id="viewCount" resultType="java.lang.Integer"  >
+    select 
+    count(1)
+    from user
+    where USER_STATUS > 0
+  </select>
+  <select id="queryUserCountByCondition" resultType="java.lang.Integer"  >
+    select 
+    count(1)
+    from user
+    <where>
+  			<if test="userStatus != null">
+  		 		AND USER_STATUS=#{userStatus}
+  			</if>
+  			<if test="userName != null">
+  				AND USER_NAME like "%"#{userName}"%"
+  			</if>
+  			<if test="userAddr != null">
+  				AND USER_ADDR like "%"#{userAddr}"%"
+  			</if>
+  			<if test="userRole != null">
+  				AND USER_ROLE = #{userRole}
+  			</if>
+  			<if test="userPhone != null">
+  				AND USER_PHONE like "%"#{userPhone}"%"
+  			</if>
+  			<if test="userId != null">
+  				AND USER_ID = #{userId}
+  			</if>
+  			AND USER_STATUS>=0
+  		</where>
+  </select>
+  
+  <select id="queryUserListByCondition" resultMap="BaseResultMap"  >
+    select 
+     <include refid="Base_Column_List" />
+    from user
+    <where>
+  			<if test="userStatus != null">
+  		 		AND USER_STATUS=#{userStatus}
+  			</if>
+  			<if test="userName != null">
+  				AND USER_NAME like "%"#{userName}"%"
+  			</if>
+  			<if test="userAddr != null">
+  				AND USER_ADDR like "%"#{userAddr}"%"
+  			</if>
+  			<if test="userRole != null">
+  				AND USER_ROLE = #{userRole}
+  			</if>
+  			<if test="userPhone != null">
+  				AND USER_PHONE like "%"#{userPhone}"%"
+  			</if>
+  			<if test="userId != null">
+  				AND USER_ID = #{userId}
+  			</if>
+  			AND USER_STATUS>=0
+  		</where>
+  		ORDER BY  `USER_STATUS` DESC
+  		limit #{index,jdbcType=INTEGER } ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryByCondition" resultMap="BaseResultMap"  >
+    select 
+     <include refid="Base_Column_List" />
+    from user
+    <where>
+  			<if test="userStatus != null">
+  		 		AND USER_STATUS=#{userStatus}
+  			</if>
+  			<if test="userName != null">
+  				AND USER_NAME like "%"#{userName}"%"
+  			</if>
+  			<if test="userAddr != null">
+  				AND USER_ADDR like "%"#{userAddr}"%"
+  			</if>
+  			<if test="userRole != null">
+  				AND USER_ROLE = #{userRole}
+  			</if>
+  			<if test="userPhone != null">
+  				AND USER_PHONE like "%"#{userPhone}"%"
+  			</if>
+  			<if test="userId != null">
+  				AND USER_ID = #{userId}
+  			</if>
+  			<if test="userIdcard != null">
+  				AND USER_IDCARD = #{userIdcard}
+  			</if>	
+  		</where>
+  		
+  </select>
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    update  user
+    set USER_STATUS= -999
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <insert id="insert" parameterType="com.cms.pojo.User" >
+    insert into user (USER_ID, USER_NAME, USER_AGE, 
+      USER_MAIL, USER_PHONE, USER_ADDR, 
+      USER_ROLE, USER_STATUS, USER_IDCARD
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userAge,jdbcType=VARCHAR}, 
+      #{userMail,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userAddr,jdbcType=VARCHAR}, 
+      #{userRole,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, #{userIdcard,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="userAge != null" >
+        USER_AGE,
+      </if>
+      <if test="userMail != null" >
+        USER_MAIL,
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE,
+      </if>
+      <if test="userAddr != null" >
+        USER_ADDR,
+      </if>
+      <if test="userRole != null" >
+        USER_ROLE,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+      <if test="userIdcard != null" >
+        USER_IDCARD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAge != null" >
+        #{userAge,jdbcType=VARCHAR},
+      </if>
+      <if test="userMail != null" >
+        #{userMail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddr != null" >
+        #{userAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcard != null" >
+        #{userIdcard,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if> 
+      <if test="userAge != null" >
+        USER_AGE = #{userAge,jdbcType=VARCHAR},
+      </if>
+      <if test="userMail != null" >
+        USER_MAIL = #{userMail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAddr != null" >
+        USER_ADDR = #{userAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userRole != null" >
+        USER_ROLE = #{userRole,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdcard != null" >
+        USER_IDCARD = #{userIdcard,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.User" >
+    update user
+    set USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_AGE = #{userAge,jdbcType=VARCHAR},
+      USER_MAIL = #{userMail,jdbcType=VARCHAR},
+      USER_PHONE = #{userPhone,jdbcType=VARCHAR},
+      USER_ADDR = #{userAddr,jdbcType=VARCHAR},
+      USER_ROLE = #{userRole,jdbcType=VARCHAR},
+      USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+      USER_IDCARD = #{userIdcard,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

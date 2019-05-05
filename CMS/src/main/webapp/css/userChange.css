@@ -1,0 +1,29 @@
+.submitcss {
+	float: right;
+	height: 30px;
+	color: white;
+	border: none;
+	width:100px;
+	background-color: #3385ff;
+}
+
+.buttoncss {
+	float: left;
+	width: 100px;
+	height: 30px;
+	color: white;
+	border: none;
+	background-color: #3385ff;
+}
+
+.submitcss:hover,.buttoncss:hover {
+	background-color: #2d78f4;
+}
+
+input {
+	width: 146px;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}

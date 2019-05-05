@@ -1,0 +1,45 @@
+.submitcss {
+	float: left;
+	height: 30px;
+	color: white;
+	border: none;
+	width:100px;
+	background-color: #3385ff;
+}
+
+.buttoncss {
+	float: right;
+	width: 100px;
+	height: 30px;
+	color: white;
+	border: none;
+	background-color: #3385ff;
+}
+
+.submitcss:hover,.buttoncss:hover {
+	background-color: #2d78f4;
+}
+
+input {
+	height: 30px;
+    width: 170px;
+    line-height: 40px;
+    border-radius: 3px;
+    border: solid 1px #DFDFDF;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+table td {
+	font-size: 13px;
+	color: #666;
+	padding: 30px 0 30px 150px;
+}
+
+#bottom {
+	width: 300px;
+	height: 70px;
+	margin: 20px auto;
+}

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.Account" >
+    <id column="BILL_ID" property="billId" jdbcType="INTEGER" />
+    <result column="EFFECT_TIME" property="effectTime" jdbcType="TIMESTAMP" />
+    <result column="PRICE" property="price" jdbcType="REAL" />
+    <result column="BILL_NOTE" property="billNote" jdbcType="VARCHAR" />
+    <result column="BILL_TYPE" property="billType" jdbcType="VARCHAR" />
+    <result column="OP_TIME" property="opTime" jdbcType="TIMESTAMP" />
+    <result column="OP_ID" property="opId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    BILL_ID, EFFECT_TIME, PRICE, BILL_NOTE, BILL_TYPE, OP_TIME, OP_ID, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    where BILL_ID = #{billId,jdbcType=INTEGER}
+  </select>
+  <select id="queryPageByCondition" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    <where>
+    	<if test="billId != null">
+    	AND BILL_ID = #{billId}
+    	</if>
+    	<if test="price != null">
+    	AND PRICE = #{price}
+    	</if>
+    	<if test="billNote != null">
+    	AND BILL_NOTE like  "%"#{billNote}"%"
+    	</if>
+    	<if test="billType != null">
+    	AND BILL_TYPE = #{billType}
+    	</if>
+    	<if test="status != null">
+    	AND STATUS = #{status}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    	<if test="endTime != null">
+    	AND EFFECT_TIME &lt;= #{endTime}
+    	</if>
+    	<if test="startTime != null">
+    	AND EFFECT_TIME &gt;= #{startTime}
+    	</if>
+    </where>
+    limit #{index,jdbcType=INTEGER } ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryCountByCondition" resultType="java.lang.Integer"  >
+    select 
+    count(1)
+    from account
+    <where>
+    	<if test="billId != null">
+    	AND BILL_ID = #{billId}
+    	</if>
+    	<if test="price != null">
+    	AND PRICE = #{price}
+    	</if>
+    	<if test="billNote != null">
+    	AND BILL_NOTE like  "%"#{billNote}"%"
+    	</if>
+    	<if test="billType != null">
+    	AND BILL_TYPE = #{billType}
+    	</if>
+    	<if test="status != null">
+    	AND STATUS = #{status}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    	<if test="endTime != null">
+    	AND EFFECT_TIME &lt;= #{endTime}
+    	</if>
+    	<if test="startTime != null">
+    	AND EFFECT_TIME &gt;= #{startTime}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="queryByCondition" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    <where>
+    	<if test="billId != null">
+    	AND BILL_ID = #{billId}
+    	</if>
+    	<if test="price != null">
+    	AND PRICE = #{price}
+    	</if>
+    	<if test="billNote != null">
+    	AND BILL_NOTE like  "%"#{billNote}"%"
+    	</if>
+    	<if test="billType != null">
+    	AND BILL_TYPE = #{billType}
+    	</if>
+    	<if test="status != null">
+    	AND STATUS = #{status}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    	<if test="effectTime != null">
+    	AND EFFECT_TIME = #{effectTime}
+    	</if>
+    </where>
+  </select>
+  
+   <select id="queryByCondition2" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from account
+    <where>
+    	<if test="billId != null">
+    	AND BILL_ID = #{billId}
+    	</if>
+    	<if test="price != null">
+    	AND PRICE = #{price}
+    	</if>
+    	<if test="billNote != null">
+    	AND BILL_NOTE like  "%"#{billNote}"%"
+    	</if>
+    	<if test="billType != null">
+    	AND BILL_TYPE = #{billType}
+    	</if>
+    	<if test="status != null">
+    	AND STATUS = #{status}
+    	</if>
+    	<if test="opId != null">
+    	AND OP_ID = #{opId}
+    	</if>
+    	<if test="endTime != null">
+    	AND EFFECT_TIME &lt;= #{endTime}
+    	</if>
+    	<if test="startTime != null">
+    	AND EFFECT_TIME &gt;= #{startTime}
+    	</if>
+    </where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account
+    where BILL_ID = #{billId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.Account" >
+    insert into account ( EFFECT_TIME, PRICE, 
+      BILL_NOTE, BILL_TYPE, OP_TIME, 
+      OP_ID, STATUS)
+    values ( #{effectTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, 
+      #{billNote,jdbcType=VARCHAR}, #{billType,jdbcType=VARCHAR}, #{opTime,jdbcType=TIMESTAMP}, 
+      #{opId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.Account" >
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        BILL_ID,
+      </if>
+      <if test="effectTime != null" >
+        EFFECT_TIME,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="billNote != null" >
+        BILL_NOTE,
+      </if>
+      <if test="billType != null" >
+        BILL_TYPE,
+      </if>
+      <if test="opTime != null" >
+        OP_TIME,
+      </if>
+      <if test="opId != null" >
+        OP_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="billId != null" >
+        #{billId,jdbcType=INTEGER},
+      </if>
+      <if test="effectTime != null" >
+        #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="billNote != null" >
+        #{billNote,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null" >
+        #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opId != null" >
+        #{opId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.Account" >
+    update account
+    <set >
+      <if test="effectTime != null" >
+        EFFECT_TIME = #{effectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="billNote != null" >
+        BILL_NOTE = #{billNote,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null" >
+        BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="opTime != null" >
+        OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opId != null" >
+        OP_ID = #{opId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BILL_ID = #{billId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.Account" >
+    update account
+    set EFFECT_TIME = #{effectTime,jdbcType=TIMESTAMP},
+      PRICE = #{price,jdbcType=DECIMAL},
+      BILL_NOTE = #{billNote,jdbcType=VARCHAR},
+      BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      OP_TIME = #{opTime,jdbcType=TIMESTAMP},
+      OP_ID = #{opId,jdbcType=INTEGER},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where BILL_ID = #{billId,jdbcType=INTEGER}
+  </update>
+</mapper>

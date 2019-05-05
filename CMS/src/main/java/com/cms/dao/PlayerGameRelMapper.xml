@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.PlayerGameRelMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.PlayerGameRel" >
+    <id column="GAME_ID" property="gameId" jdbcType="INTEGER" />
+    <id column="PLAYER_ID" property="playerId" jdbcType="INTEGER" />
+    <result column="USER_GRADE" property="userGrade" jdbcType="REAL" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GAME_ID, PLAYER_ID, USER_GRADE, USER_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.cms.pojo.PlayerGameRelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_game_rel
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+  </select>
+  <select id="queryByGameId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from player_game_rel
+    where GAME_ID = #{0}
+    order by USER_GRADE DESC 
+  </select>
+  <select id="queryByPlayerId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from player_game_rel
+    where PLAYER_ID = #{0}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.cms.pojo.PlayerGameRelKey" >
+    delete from player_game_rel
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByGameId"  >
+    delete from player_game_rel
+    where GAME_ID = #{0}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.PlayerGameRel" >
+    insert into player_game_rel (GAME_ID, PLAYER_ID, USER_GRADE, 
+      USER_STATUS)
+    values (#{gameId,jdbcType=INTEGER}, #{playerId,jdbcType=INTEGER}, #{userGrade,jdbcType=REAL}, 
+      #{userStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.PlayerGameRel" >
+    insert into player_game_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="playerId != null" >
+        PLAYER_ID,
+      </if>
+      <if test="userGrade != null" >
+        USER_GRADE,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="playerId != null" >
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="userGrade != null" >
+        #{userGrade,jdbcType=REAL},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.PlayerGameRel" >
+    update player_game_rel
+    <set >
+      <if test="userGrade != null" >
+        USER_GRADE = #{userGrade,jdbcType=REAL},
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.PlayerGameRel" >
+    update player_game_rel
+    set USER_GRADE = #{userGrade,jdbcType=REAL},
+      USER_STATUS = #{userStatus,jdbcType=VARCHAR}
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+  </update>
+  <select id="queryByCondition" resultMap="BaseResultMap" parameterType="com.cms.pojo.PlayerGameRelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_game_rel
+    <where>
+  			<if test="gameId != null">
+  		 		AND GAME_ID = #{gameId}
+  			</if>
+  			<if test="playerId != null">
+  				AND PLAYER_ID = #{playerId}
+  			</if>
+  			<if test="userStatus != null">
+  				AND USER_STATUS = #{userStatus}
+  			</if>
+  	</where>
+      ORDER BY `USER_GRADE` DESC
+  </select>
+</mapper>

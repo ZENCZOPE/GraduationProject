@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.SqlMapper" >
+  <select id="checkLogin" resultType="java.util.Map"  >
+    select 
+     a.USER_NAME userName,a.USER_IDCARD userIdcard
+    from user a,login b
+    where a.USER_ID=b.ID_NO 
+    AND a.USER_IDCARD=#{userIdcard}
+    AND b.LOGIN_PW = #{loginPw}
+  		
+  </select>
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.Device" >
+    <id column="IEMI" property="iemi" jdbcType="VARCHAR" />
+    <result column="SOC_IMEI" property="socImei" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREAT_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="OP_DATE" property="opDate" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    IEMI, SOC_IMEI, STATUS, CREAT_DATE, OP_DATE, USER_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    where IEMI = #{iemi,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="queryCountByCondition" resultType="java.lang.Integer" >
+    select 
+    count(1)
+    from device
+    <where>
+    	<if test="iemi != null">
+    	AND IEMI like "%"#{iemi}"%"
+    	</if>
+    	<if test="socImei != null">
+    	AND SOC_IMEI like "%"#{socImei}"%"
+    	</if>
+    	<if test="status != null">
+    	AND STATUS like "%"#{status}"%"
+    	</if>
+    	<if test="userId != null">
+    	AND USER_ID like "%"#{userId}"%"
+    	</if>
+    </where>
+  </select>
+  
+   <select id="queryPageByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from device
+    <where>
+    	<if test="iemi != null">
+    	AND IEMI like "%"#{iemi}"%"
+    	</if>
+    	<if test="socImei != null">
+    	AND SOC_IMEI like "%"#{socImei}"%"
+    	</if>
+    	<if test="status != null">
+    	AND STATUS like "%"#{status}"%"
+    	</if>
+    	<if test="userId != null">
+    	AND USER_ID like "%"#{userId}"%"
+    	</if>
+    </where>
+    limit #{index,jdbcType=INTEGER } ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from device
+    where IEMI = #{iemi,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.Device" >
+    insert into device (IEMI, SOC_IMEI, STATUS, 
+      CREAT_DATE, OP_DATE, USER_ID
+      )
+    values (#{iemi,jdbcType=VARCHAR}, #{socImei,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{opDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.Device" >
+    insert into device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iemi != null" >
+        IEMI,
+      </if>
+      <if test="socImei != null" >
+        SOC_IMEI,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createDate != null" >
+        CREAT_DATE,
+      </if>
+      <if test="opDate != null" >
+        OP_DATE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iemi != null" >
+        #{iemi,jdbcType=VARCHAR},
+      </if>
+      <if test="socImei != null" >
+        #{socImei,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opDate != null" >
+        #{opDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.Device" >
+    update device
+    <set >
+      <if test="socImei != null" >
+        SOC_IMEI = #{socImei,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREAT_DATE = #{createDate},
+      </if>
+      <if test="opDate != null" >
+        OP_DATE = #{opDate},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where IEMI = #{iemi,jdbcType=VARCHAR}
+  </update>
+  <update id="stopDevice" parameterType="com.cms.pojo.Device" >
+    update device
+    <set >
+      <if test="socImei != null" >
+        SOC_IMEI = #{socImei,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREAT_DATE = #{createDate},
+      </if>
+      <if test="opDate != null" >
+        OP_DATE = #{opDate},
+      </if>
+      <if test="opDate != null">
+      USER_ID = #{userId,jdbcType=INTEGER}
+      </if>
+         
+    </set> 
+    where IEMI = #{iemi,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.Device" >
+    update device
+    set SOC_IMEI = #{socImei,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREAT_DATE = #{createDate,jdbcType=TIMESTAMP},
+      OP_DATE = #{opDate,jdbcType=TIMESTAMP},
+      USER_ID = #{userId,jdbcType=INTEGER}
+    where IEMI = #{iemi,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

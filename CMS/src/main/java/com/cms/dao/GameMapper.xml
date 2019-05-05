@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.GameMapper" >
+   <resultMap id="BaseResultMap" type="com.cms.pojo.Game" >
+    <id column="GAME_ID" property="gameId" jdbcType="INTEGER" />
+    <result column="GAME_NAME" property="gameName" jdbcType="VARCHAR" />
+    <result column="GAME_LEVEL" property="gameLevel" jdbcType="VARCHAR" />
+    <result column="GAME_DATE" property="gameDate" jdbcType="TIMESTAMP" />
+    <result column="GAME_JOIN_COUNT" property="gameJoinCount" jdbcType="INTEGER" />
+    <result column="GAME_UP_COUNT" property="gameUpCount" jdbcType="INTEGER" />
+    <result column="GAME_STATUS" property="gameStatus" jdbcType="VARCHAR" />
+    <result column="GAME_ADDR" property="gameAddr" jdbcType="VARCHAR" />
+    <result column="GAME_END_DATE" property="gameEndDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GAME_ID, GAME_NAME, GAME_LEVEL, GAME_DATE, GAME_JOIN_COUNT, GAME_UP_COUNT, GAME_STATUS, 
+    GAME_ADDR, GAME_END_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from game
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+  </select>
+  <select id="queryByStatus" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from game
+    where GAME_STATUS = #{gameStatus}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from game
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.Game" >
+    insert into game (GAME_NAME, GAME_LEVEL, 
+      GAME_DATE, GAME_JOIN_COUNT, GAME_UP_COUNT, 
+      GAME_STATUS, GAME_ADDR, GAME_END_DATE
+      )
+    values (#{gameName,jdbcType=VARCHAR}, #{gameLevel,jdbcType=VARCHAR}, 
+      #{gameDate,jdbcType=TIMESTAMP}, #{gameJoinCount,jdbcType=INTEGER}, #{gameUpCount,jdbcType=INTEGER}, 
+      #{gameStatus,jdbcType=VARCHAR}, #{gameAddr,jdbcType=VARCHAR}, #{gameEndDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+   <insert id="insertSelective" parameterType="com.cms.pojo.Game" >
+    insert into game
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="gameName != null" >
+        GAME_NAME,
+      </if>
+      <if test="gameLevel != null" >
+        GAME_LEVEL,
+      </if>
+      <if test="gameDate != null" >
+        GAME_DATE,
+      </if>
+      <if test="gameJoinCount != null" >
+        GAME_JOIN_COUNT,
+      </if>
+      <if test="gameUpCount != null" >
+        GAME_UP_COUNT,
+      </if>
+      <if test="gameStatus != null" >
+        GAME_STATUS,
+      </if>
+      <if test="gameAddr != null" >
+        GAME_ADDR,
+      </if>
+      <if test="gameEndDate != null" >
+        GAME_END_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="gameName != null" >
+        #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="gameLevel != null" >
+        #{gameLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="gameDate != null" >
+        #{gameDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gameJoinCount != null" >
+        #{gameJoinCount,jdbcType=INTEGER},
+      </if>
+      <if test="gameUpCount != null" >
+        #{gameUpCount,jdbcType=INTEGER},
+      </if>
+      <if test="gameStatus != null" >
+        #{gameStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="gameAddr != null" >
+        #{gameAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gameEndDate != null" >
+        #{gameEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.Game" >
+    update game
+    <set >
+      <if test="gameName != null" >
+        GAME_NAME = #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="gameLevel != null" >
+        GAME_LEVEL = #{gameLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="gameDate != null" >
+        GAME_DATE = #{gameDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gameJoinCount != null" >
+        GAME_JOIN_COUNT = #{gameJoinCount,jdbcType=INTEGER},
+      </if>
+      <if test="gameUpCount != null" >
+        GAME_UP_COUNT = #{gameUpCount,jdbcType=INTEGER},
+      </if>
+      <if test="gameStatus != null" >
+        GAME_STATUS = #{gameStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="gameAddr != null" >
+        GAME_ADDR = #{gameAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gameEndDate != null" >
+        GAME_END_DATE = #{gameEndDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.Game" >
+    update game
+    set GAME_NAME = #{gameName,jdbcType=VARCHAR},
+      GAME_LEVEL = #{gameLevel,jdbcType=VARCHAR},
+      GAME_DATE = #{gameDate,jdbcType=TIMESTAMP},
+      GAME_JOIN_COUNT = #{gameJoinCount,jdbcType=INTEGER},
+      GAME_UP_COUNT = #{gameUpCount,jdbcType=INTEGER},
+      GAME_STATUS = #{gameStatus,jdbcType=VARCHAR}
+      GAME_ADDR = #{gameAddr,jdbcType=VARCHAR}
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryCountByCondition" resultType="java.lang.Integer"  >
+    select 
+    count(1)
+    from game
+    <where>
+  			<if test="gameStatus != null">
+  		 		AND GAME_ADDR like "%"#{gameAddr}"%"
+  			</if>
+  			<if test="gameName != null">
+  				AND GAME_NAME like "%"#{gameName}"%"
+  			</if>
+  			<if test="gameLevel != null">
+  				AND GAME_LEVEL like "%"#{gameLevel}"%"
+  			</if>		
+  		</where>
+  </select>
+  
+  <select id="queryPageByCondition" resultMap="BaseResultMap"  >
+    select 
+     <include refid="Base_Column_List" />
+    from game
+    <where>
+  			<if test="gameStatus != null">
+  		 		AND GAME_STATUS=#{gameStatus}
+  			</if>
+  			<if test="gameName != null">
+  				AND GAME_NAME like "%"#{gameName}"%"
+  			</if>
+  			<if test="gameLevel != null">
+  				AND GAME_LEVEL like "%"#{gameLevel}"%"
+  			</if>
+  			<if test="gameAddr != null">
+  				AND GAME_ADDR like "%"#{gameAddr}"%"
+  			</if>
+  			<if test="gameDate != null">
+  				AND GAME_DATE like #{gameDate}
+  			</if>
+  			<if test="gameJoinCount != null">
+  				AND GAME_JOIN_COUNT like #{gameJoinCount}
+  			</if>
+  			<if test="gameUpCount != null">
+  				AND GAME_UP_COUNT like #{gameUpCount}
+  			</if>		
+  			<if test="gameId != null">
+  				AND GAME_ID like #{gameId}
+  			</if>
+  		</where>
+  		ORDER BY  `GAME_STATUS` DESC
+  		limit #{index,jdbcType=INTEGER } ,#{pageSize,jdbcType=INTEGER}
+  </select>
+</mapper>

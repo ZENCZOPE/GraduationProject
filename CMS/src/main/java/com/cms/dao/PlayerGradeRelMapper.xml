@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cms.dao.PlayerGradeRelMapper" >
+  <resultMap id="BaseResultMap" type="com.cms.pojo.PlayerGradeRel" >
+    <id column="GAME_ID" property="gameId" jdbcType="INTEGER" />
+    <id column="PLAYER_ID" property="playerId" jdbcType="INTEGER" />
+    <id column="JUDGE_ID" property="judgeId" jdbcType="INTEGER" />
+    <result column="GRADE" property="grade" jdbcType="REAL" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    GAME_ID, PLAYER_ID, JUDGE_ID, GRADE, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.cms.pojo.PlayerGradeRelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_grade_rel
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+      and JUDGE_ID = #{judgeId,jdbcType=INTEGER}
+  </select>
+   <select id="queryByCondition" resultMap="BaseResultMap" parameterType="com.cms.pojo.PlayerGradeRelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from player_grade_rel
+    <where>
+  			<if test="gameId != null">
+  		 		AND GAME_ID = #{gameId}
+  			</if>
+  			<if test="playerId != null">
+  				AND PLAYER_ID = #{playerId}
+  			</if>
+  			<if test="judgeId != null">
+  				AND JUDGE_ID = #{judgeId}
+  			</if>
+  	</where>
+      ORDER BY `GRADE` DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.cms.pojo.PlayerGradeRelKey" >
+    delete from player_grade_rel
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+      and JUDGE_ID = #{judgeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cms.pojo.PlayerGradeRel" >
+    insert into player_grade_rel (GAME_ID, PLAYER_ID, JUDGE_ID, 
+      GRADE, STATUS)
+    values (#{gameId,jdbcType=INTEGER}, #{playerId,jdbcType=INTEGER}, #{judgeId,jdbcType=INTEGER}, 
+      #{grade,jdbcType=REAL}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cms.pojo.PlayerGradeRel" >
+    insert into player_grade_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="playerId != null" >
+        PLAYER_ID,
+      </if>
+      <if test="judgeId != null" >
+        JUDGE_ID,
+      </if>
+      <if test="grade != null" >
+        GRADE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="playerId != null" >
+        #{playerId,jdbcType=INTEGER},
+      </if>
+      <if test="judgeId != null" >
+        #{judgeId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cms.pojo.PlayerGradeRel" >
+    update player_grade_rel
+    <set >
+      <if test="grade != null" >
+        GRADE = #{grade,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+      and JUDGE_ID = #{judgeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cms.pojo.PlayerGradeRel" >
+    update player_grade_rel
+    set GRADE = #{grade,jdbcType=REAL},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where GAME_ID = #{gameId,jdbcType=INTEGER}
+      and PLAYER_ID = #{playerId,jdbcType=INTEGER}
+      and JUDGE_ID = #{judgeId,jdbcType=INTEGER}
+  </update>
+</mapper>

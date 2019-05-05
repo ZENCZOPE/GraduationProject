@@ -1,0 +1,27 @@
+h1 {
+	text-align: center;
+	color: #912CEE;
+}
+
+hr {
+	height:2px;
+	border:none;
+	border-top:2px dotted #185598;
+}
+
+table {
+	width: 100%;
+	color: #912CEE;
+}
+
+table tr {
+	width: 100%;
+}
+
+table td {
+	font-size: 20px;
+	text-indent: 15%;
+	line-height: 120px;
+	width: 500px;
+	height: 60px;
+}
